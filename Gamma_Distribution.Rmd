@@ -5,7 +5,7 @@ date: "1/29/2020"
 output: pdf_document
 ---
 
-
+##
 # Plotting Gamma Distribution with different Shape and Rate Parameters for observations
 
 ```{r}
