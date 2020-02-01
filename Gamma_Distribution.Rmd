@@ -24,12 +24,21 @@ library(MASS)
 require(gridExtra)
 
 set.seed(3)
-x1 <- rgamma(100000, shape = 1, rate= 1/30)
-x2 <- rgamma(100000, shape = 2, rate= 1/30)
-x3 <- rgamma(100000, shape = 3, rate= 1/30)
-x4 <- rgamma(100000, shape = 4, rate= 1/30)
 
+n <- seq(0, 100, by = .001)
 
+x1 <- rgamma(n, shape = 1, rate= 1)
+x2 <- rgamma(n, shape = 2, rate= 1)
+x3 <- rgamma(n, shape = 3, rate= 1)
+x4 <- rgamma(n, shape = 4, rate= 1)
+
+#means
+m1 = round((1/sum(n))*sum((n*x1)))
+m2 = round((1/sum(n))*sum((n*x2)))
+m3 = round((1/sum(n))*sum((n*x3)))
+m4 = round((1/sum(n))*sum((n*x4)))
+  
+  
 den1 <- density(x1)
 den2 <- density(x2)
 den3 <- density(x3)
@@ -45,36 +54,27 @@ fit.params_x2 <- fitdistr(x2, "gamma", lower = c(0, 0))
 fit.params_x3 <- fitdistr(x3, "gamma", lower = c(0, 0))
 fit.params_x4 <- fitdistr(x4, "gamma", lower = c(0, 0))
 
-#ggplot(data = dat, aes(x = x,y = y)) + 
- # geom_point(size = 1.5) +     
-  #geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
-  #theme_classic()
-
-
 p1 <- ggplot(data = dat1) +
   geom_histogram(data = as.data.frame(x1), aes(x=x1, y=..density..)) +
   geom_line(aes(x=dat1$x, y=dgamma(dat1$x,fit.params_x1$estimate["shape"], fit.params_x1$estimate["rate"])), color="red", size = 1) + 
-  theme_classic()
+  theme_classic() + ggtitle("mean= ", m1) + coord_cartesian(xlim = c(0, 10), ylim = c(0, 1)) 
 
 p2 <- ggplot(data = dat2) +
   geom_histogram(data = as.data.frame(x2), aes(x=x2, y=..density..)) +
   geom_line(aes(x=dat2$x, y=dgamma(dat2$x,fit.params_x2$estimate["shape"], fit.params_x2$estimate["rate"])), color="red", size = 1) + 
-  theme_classic()
+  theme_classic() + ggtitle("mean= ", m2) + coord_cartesian(xlim = c(0, 10), ylim = c(0, 1)) 
 
 p3 <- ggplot(data = dat3) +
   geom_histogram(data = as.data.frame(x3), aes(x=x3, y=..density..)) +
   geom_line(aes(x=dat3$x, y=dgamma(dat3$x,fit.params_x3$estimate["shape"], fit.params_x3$estimate["rate"])), color="red", size = 1) + 
-  theme_classic()
+  theme_classic()+ ggtitle("mean= ", m3) + coord_cartesian(xlim = c(0, 10), ylim = c(0, 1)) 
 
 p4 <- ggplot(data = dat4) +
   geom_histogram(data = as.data.frame(x4), aes(x=x4, y=..density..)) +
   geom_line(aes(x=dat4$x, y=dgamma(dat4$x,fit.params_x4$estimate["shape"], fit.params_x4$estimate["rate"])), color="red", size = 1) + 
-  theme_classic()
+  theme_classic()+ ggtitle("mean= ", m4) + coord_cartesian(xlim = c(0, 10), ylim = c(0, 1)) 
 
 grid.arrange(p1,p2,p3,p4, ncol =2)
-
-#hist(x,prob=T)
-#lines( sort(x) , y = dgamma( sort(x) , shape = 2 , rate = 1/30) , col = "blue" , lty = 2 , lwd = 2 )
 
 ```
 
