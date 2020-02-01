@@ -6,6 +6,8 @@ output: pdf_document
 ---
 
 
+# Plotting Gamma Distribution with different Shape and Rate Parameters for observations
+
 ```{r}
 
 library(ggplot2)
