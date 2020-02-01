@@ -1,0 +1,264 @@
+---
+title: "Gamma Distribution"
+author: "Murali Manohar Murugesan"
+date: "1/29/2020"
+output: pdf_document
+---
+
+
+```{r}
+
+library(ggplot2)
+library(MASS)
+
+```
+
+
+
+
+
+```{r - MgCa_calib.pre, shape = 1, rate = 3 }
+
+require(gridExtra)
+
+set.seed(3)
+x1 <- rgamma(100000, shape = 1, rate= 1/30)
+x2 <- rgamma(100000, shape = 2, rate= 1/30)
+x3 <- rgamma(100000, shape = 3, rate= 1/30)
+x4 <- rgamma(100000, shape = 4, rate= 1/30)
+
+
+den1 <- density(x1)
+den2 <- density(x2)
+den3 <- density(x3)
+den4 <- density(x4)
+
+dat1 <- data.frame(x = den1$x, y = den1$y)
+dat2 <- data.frame(x = den2$x, y = den2$y)
+dat3 <- data.frame(x = den3$x, y = den3$y)
+dat4 <- data.frame(x = den4$x, y = den4$y)
+
+fit.params_x1 <- fitdistr(x1, "gamma", lower = c(0, 0))
+fit.params_x2 <- fitdistr(x2, "gamma", lower = c(0, 0))
+fit.params_x3 <- fitdistr(x3, "gamma", lower = c(0, 0))
+fit.params_x4 <- fitdistr(x4, "gamma", lower = c(0, 0))
+
+#ggplot(data = dat, aes(x = x,y = y)) + 
+ # geom_point(size = 1.5) +     
+  #geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
+  #theme_classic()
+
+
+p1 <- ggplot(data = dat1) +
+  geom_histogram(data = as.data.frame(x1), aes(x=x1, y=..density..)) +
+  geom_line(aes(x=dat1$x, y=dgamma(dat1$x,fit.params_x1$estimate["shape"], fit.params_x1$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+p2 <- ggplot(data = dat2) +
+  geom_histogram(data = as.data.frame(x2), aes(x=x2, y=..density..)) +
+  geom_line(aes(x=dat2$x, y=dgamma(dat2$x,fit.params_x2$estimate["shape"], fit.params_x2$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+p3 <- ggplot(data = dat3) +
+  geom_histogram(data = as.data.frame(x3), aes(x=x3, y=..density..)) +
+  geom_line(aes(x=dat3$x, y=dgamma(dat3$x,fit.params_x3$estimate["shape"], fit.params_x3$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+p4 <- ggplot(data = dat4) +
+  geom_histogram(data = as.data.frame(x4), aes(x=x4, y=..density..)) +
+  geom_line(aes(x=dat4$x, y=dgamma(dat4$x,fit.params_x4$estimate["shape"], fit.params_x4$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+grid.arrange(p1,p2,p3,p4, ncol =2)
+
+#hist(x,prob=T)
+#lines( sort(x) , y = dgamma( sort(x) , shape = 2 , rate = 1/30) , col = "blue" , lty = 2 , lwd = 2 )
+
+```
+
+
+```{r - d18O_calib.pre.2, shape = 6, rate = 1}
+
+set.seed(3)
+x <- rgamma(100000, shape = 2, rate = 1/30)
+
+den <- density(x)
+
+dat <- data.frame(x = den$x, y = den$y)
+
+fit.params <- fitdistr(x, "gamma", lower = c(0, 0))
+
+ggplot(data = dat, aes(x = x,y = y)) + 
+  geom_point(size = 1.5) +     
+  geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+ggplot(data = dat) +
+  geom_histogram(data = as.data.frame(x), aes(x=x, y=..density..)) +
+  geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+```
+
+```{r - d18O_calib.pre, shape = 3, rate = 1/30}
+
+set.seed(3)
+x <- rgamma(100000, shape = 3, rate = 1/30)
+
+den <- density(x)
+
+dat <- data.frame(x = den$x, y = den$y)
+
+fit.params <- fitdistr(x, "gamma", lower = c(0, 0))
+
+ggplot(data = dat, aes(x = x,y = y)) + 
+  geom_point(size = 1.5) +     
+  geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+ggplot(data = dat) +
+  geom_histogram(data = as.data.frame(x), aes(x=x, y=..density..)) +
+  geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+```
+
+
+```{r - d18O_sw.pre, shape = 30, rate = 0.01}
+
+set.seed(3)
+x <- rgamma(100000, shape = 30, rate = 0.01)
+
+den <- density(x)
+
+dat <- data.frame(x = den$x, y = den$y)
+
+fit.params <- fitdistr(x, "gamma", lower = c(0, 0))
+
+ggplot(data = dat, aes(x = x,y = y)) + 
+  geom_point(size = 1.5) +     
+  geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+ggplot(data = dat) +
+  geom_histogram(data = as.data.frame(x), aes(x=x, y=..density..)) +
+  geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+```
+
+```{r -BWT.pre , shape = 20, rate = 0.1}
+
+
+
+set.seed(3)
+x <- rgamma(200,shape = 2, rate = 1/30)
+
+den <- density(x)
+
+dat <- data.frame(x = den$x, y = den$y)
+
+fit.params <- fitdistr(x, "gamma", lower = c(0, 0))
+
+ggplot(data = dat, aes(x = x,y = y)) + 
+  geom_point(size = 1.5) +     
+  geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+ggplot(data = dat) +
+  geom_histogram(data = as.data.frame(x), aes(x=x, y=..density..)) +
+  geom_line(aes(x=dat$x, y=dgamma(dat$x,fit.params$estimate["shape"], fit.params$estimate["rate"])), color="red", size = 1) + 
+  theme_classic()
+
+g1 <- seq(-10, 10, by = .1)
+g2 <- dnorm(1000, 2.3, x)
+
+n=100000
+g3 <- dnorm( g1, 2.3, x)
+
+plot(g1, g3, type = 'l', lwd = 1)
+
+
+```
+```{r - estimating gamma dist parameters in R}
+
+
+
+mean = mean(d_mgca_calib$MgCa)
+std = sd(d_mgca_calib$MgCa)
+show(mean)
+show(std)
+
+
+mode = 2.151818182
+sd = 0.591902794
+
+# Here are the corresponding rate and shape parameter values:
+ra = ( mode + sqrt( mode^2 + 4*sd^2 ) ) / ( 2 * sd^2 )
+sh = 1 + mode * ra
+show(sh)
+show(ra)
+
+```
+
+
+```{r - using glm ex 1}
+
+clotting <- data.frame(
+    u = c(5,10,15,20,30,40,60,80,100),
+    lot1 = c(118,58,42,35,27,25,21,19,18),
+    lot2 = c(69,35,26,21,18,16,13,12,12))
+clot1 <- glm(lot1 ~ log(u), data = clotting, family = Gamma)
+gamma.shape(clot1)
+## Not run: 
+#Alpha: 538.13
+ #  SE: 253.60
+## End(Not run)
+gm <- glm(Days + 0.1 ~ Age*Eth*Sex*Lrn,
+          quasi(link=log, variance="mu^2"), quine, start = rep(0,32))
+gamma.shape(gm, verbose = TRUE)
+## Not run: 
+#Initial estimate: 1.0603
+#Iter.  1  Alpha: 1.23840774338543
+#Iter.  2  Alpha: 1.27699745778205
+#Iter.  3  Alpha: 1.27834332265501
+#Iter.  4  Alpha: 1.27834485787226
+
+#Alpha: 1.27834
+ #  SE: 0.13452
+## End(Not run)
+summary(gm, dispersion = gamma.dispersion(gm))  # better summary
+
+
+
+```
+
+```{r - using glm ex 2}
+
+clotting <- data.frame(
+    u = c(5,10,15,20,30,40,60,80,100),
+    lot1 = c(118,58,42,35,27,25,21,19,18),
+    lot2 = c(69,35,26,21,18,16,13,12,12))
+summary(glm(lot1 ~ log(u), data = clotting, family = Gamma))
+summary(glm(lot2 ~ log(u), data = clotting, family = Gamma))
+## Aliased ("S"ingular) -> 1 NA coefficient
+
+```
+
+
+```{r - fitting glm to our data}
+
+library(glm2)
+
+
+#mgca_glm2 <- glm2(formula = d_mgca_calib$MgCa ~ d_mgca_calib$BWT, data=d_mgca_calib, family = poisson(link = "log"))
+
+#mgca_glm2 <- glm2(formula = d_mgca_calib$MgCa ~ d_mgca_calib$BWT, data=d_mgca_calib, family = gamma(link = "inverse"))
+
+mgca_glm <- glm(formula = d_mgca_calib$MgCa ~ d_mgca_calib$BWT, data=d_mgca_calib, family = Gamma(link = "inverse"))
+
+
+summary(mgca_glm)
+
+
+```
